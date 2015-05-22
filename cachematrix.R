@@ -1,4 +1,4 @@
-## Put comments here that give an overall description of what your
+## David Sky - seemsArtless homework for Programming Assignment #2 - May 22, 2015
 ## functions do
 
 ## Write a short comment describing this function
