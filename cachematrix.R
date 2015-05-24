@@ -16,15 +16,19 @@ makeCacheMatrix <- function(x = matrix()) {
         m <<- NULL
     }
     get <- function() x
+    
     # The function that actually computes the inverse of the
     # matrix and sets it to m
     setmatInv <- function(solve) {
         # message( "debug: In setmatInv...")
         m <<- solve
     }
+    
     getmatInv <- function() {
         # message( "debug: In getmatInv...")
         m }
+    
+    # Return the four functions we'll need
     list(set = set, 
          get = get,
          setmatInv = setmatInv,
@@ -42,13 +46,17 @@ cacheSolve <- function(x, ...) {
     ## Return a matrix that is the inverse of 'x'
     ## Uses functions and global variables defined above in makeCacheMatrix
     
-    # Assume we DO have a cache'd value
+    # Start by assuming we DO have a cache'd value from a previous use of this inverse
     m <- x$getmatInv()
 
-    if(!is.null(m)) {
+    if(!is.null(m)) { # If something was found for m in the cache, just return that
         message("getting cached data")
         return(m)
     }
+    # We only get here if m IS null, ie not found in the cache, so we
+    # need to do the calculation, AND set the result in the cache so we can
+    # find it directly next time without re-calculating it.
+    
     # message("debug: is.null returned true, so do the calculation")
     data <- x$get()
     m <- solve(data, ...)
