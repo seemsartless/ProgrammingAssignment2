@@ -8,17 +8,28 @@ makeCacheMatrix <- function(x = matrix()) {
     # Based on the assignment description, modified for a matrix
     # These are the helper functions that deal with the global variables
     # and related functions.
+    
+    # Commented out the message statements, they were just for debugging and test purposes
     m <- NULL
     set <- function(y) {
         x <<- y
         m <<- NULL
     }
     get <- function() x
-    setmatrix <- function(matrix) m <<- matrix
-    getmatrix <- function() m
-    list(set = set, get = get,
-         setmatrix = setmatrix,
-         getmatrix = getmatrix)
+    # The function that actually computes the inverse of the
+    # matrix and sets it to m
+    setmatInv <- function(solve) {
+        # message( "debug: In setmatInv...")
+        m <<- solve
+    }
+    getmatInv <- function() {
+        # message( "debug: In getmatInv...")
+        m }
+    list(set = set, 
+         get = get,
+         setmatInv = setmatInv,
+         getmatInv = getmatInv
+    )
 }
 
 
@@ -32,14 +43,16 @@ cacheSolve <- function(x, ...) {
     ## Uses functions and global variables defined above in makeCacheMatrix
     
     # Assume we DO have a cache'd value
-    m <- x$getmatrix()
+    m <- x$getmatInv()
+
     if(!is.null(m)) {
         message("getting cached data")
         return(m)
     }
+    # message("debug: is.null returned true, so do the calculation")
     data <- x$get()
     m <- solve(data, ...)
-    x$setmatrix(m)
+    x$setmatInv(m)
     m
     
 }
